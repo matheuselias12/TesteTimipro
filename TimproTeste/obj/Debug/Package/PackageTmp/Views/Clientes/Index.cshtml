@@ -1,0 +1,73 @@
+﻿@model IEnumerable<TimproTeste.Entidade.Clientes>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Lista de Clientes</h2>
+
+<div class="form-group" style="display:flex; justify-content:flex-end;">
+    @Html.ActionLink("Novo", "Create", null, new { @class = "btn btn-success" })
+</div>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Nome)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CPF)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Status)
+        </th>
+        <th>
+            Descrição
+        </th>
+        <th>
+            Ações
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nome)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CPF)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status, new { Value = 1, Text = "Ativo" })
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Imovel.Descricao)
+            </td>
+            <td>
+                @Html.ActionLink("Editar", "Edit", new { id = item.ClienteId }, new { @class = "btn btn-success" })
+                @Html.ActionLink("Detalhes", "Details", new { id = item.ClienteId }, new { @class = "btn btn-primary" })
+                @Html.ActionLink("Excluir", "Delete", new { id = item.ClienteId }, new { @class = "btn btn-danger" })
+            </td>
+        </tr>
+    }
+
+</table>
+
+
+<script>
+    function myfunction() {
+        debugger
+        var CPF = $("CPF").val();
+
+        if (CPF == '09653552686') {
+            alert("Erro no CPF");
+        }
+    }
+</script>

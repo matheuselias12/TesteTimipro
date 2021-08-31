@@ -1,0 +1,94 @@
+﻿@model TimproTeste.Entidade.Imovel
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Cadastrar novo Imovel</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Tipo De Negocio</label>
+            <div class="col-md-10">
+                <div class="">
+                    @Html.DropDownListFor(model => model.TipoDeNegocio, new List<SelectListItem>
+                         {
+                             new SelectListItem { Value = "1", Text = "Venda" },
+                             new SelectListItem { Value = "0", Text = "Aluguel" },
+                         }, htmlAttributes: new { @id = "TipoDeNegocio", @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.TipoDeNegocio, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Valor, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Valor, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Valor, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Descricao, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.Descricao, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Descricao, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Status</label>
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @Html.DropDownListFor(model => model.StatusImovel, new List<SelectListItem>
+                         {
+                             new SelectListItem { Value = "1", Text = "Ativo" },
+                             new SelectListItem { Value = "0", Text = "Inativo" },
+                         }, htmlAttributes: new { @id = "isActive", @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.StatusImovel, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ClienteId, "Cliente", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("ClienteId", null, "Selecione um cliente", htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ClienteId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Salvar" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Voltar", "Index", null, new { @class = "btn btn-default" })
+</div>
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script >
+
+<script>
+
+    $(document).ready(function () {
+        $('#isActive').select2();
+    });
+
+</script>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

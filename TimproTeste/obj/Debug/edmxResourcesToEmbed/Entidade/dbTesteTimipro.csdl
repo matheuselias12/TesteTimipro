@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="matheusModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Clientes">
+    <Key>
+      <PropertyRef Name="ClienteId" />
+      <PropertyRef Name="Nome" />
+      <PropertyRef Name="Email" />
+      <PropertyRef Name="CPF" />
+      <PropertyRef Name="Status" />
+    </Key>
+    <Property Name="ClienteId" Type="Guid" Nullable="false" />
+    <Property Name="Nome" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="CPF" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Status" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Imovel" Relationship="matheusModel.FK_Imovel_Clientes" FromRole="Clientes" ToRole="Imovel" />
+  </EntityType>
+  <EntityType Name="Imovel">
+    <Key>
+      <PropertyRef Name="ImovelId" />
+      <PropertyRef Name="Valor" />
+      <PropertyRef Name="StatusImovel" />
+      <PropertyRef Name="ClienteId" />
+    </Key>
+    <Property Name="ImovelId" Type="Guid" Nullable="false" />
+    <Property Name="Valor" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="Descricao" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="StatusImovel" Type="Boolean" Nullable="false" />
+    <Property Name="ClienteId" Type="Guid" Nullable="false" />
+    <NavigationProperty Name="Clientes" Relationship="matheusModel.FK_Imovel_Clientes" FromRole="Imovel" ToRole="Clientes" />
+  </EntityType>
+  <EntityContainer Name="matheusEntities1" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Clientes" EntityType="Self.Clientes" />
+    <EntitySet Name="Imovel" EntityType="Self.Imovel" />
+    <AssociationSet Name="FK_Imovel_Clientes" Association="matheusModel.FK_Imovel_Clientes">
+      <End Role="Clientes" EntitySet="Clientes" />
+      <End Role="Imovel" EntitySet="Imovel" />
+    </AssociationSet>
+  </EntityContainer>
+  <Association Name="FK_Imovel_Clientes">
+    <End Type="matheusModel.Clientes" Role="Clientes" Multiplicity="1" />
+    <End Type="matheusModel.Imovel" Role="Imovel" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Clientes">
+        <PropertyRef Name="ClienteId" />
+      </Principal>
+      <Dependent Role="Imovel">
+        <PropertyRef Name="ClienteId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>
